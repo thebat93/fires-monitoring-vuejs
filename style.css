@@ -1,0 +1,140 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+html, body, #map {
+    height: 100%;
+    width: 100%;
+    font-family: 'Helvetica Neue';
+}
+
+.leaflet-control-layers {
+    z-index: 10000;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.filter-panel {
+    position: absolute;
+    z-index: 10000;
+    background-color: white;
+    padding: 0px 5px 5px 5px;
+    /*height: 150px;*/
+    /*overflow-x: hidden;*/
+    margin-left: 78px;
+    margin-top: 10px;
+    cursor: default;
+    /* font-size: 15px; */
+}
+
+.filter-panel__open {
+    width: 400px;
+    border: 2px solid rgba(0,0,0,0.2);
+    background-clip: padding-box;
+}
+
+.filter-panel__closed {
+    width: 0px;
+}
+
+.open-button {
+    position: absolute;
+    color: black;
+    background-color: white;
+    z-index: 1000;
+    padding: 2px;
+    margin-left: 80px;
+    margin-top: 12px;
+}
+
+.close-button {
+    float: right;
+    margin-right: 10px;
+}
+
+.tabs-container {
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.tab-button {
+    outline: none;
+    padding: 10px 5px;
+    transition: 0.3s;
+    width: 116px;
+    border-radius: 20%;
+    border: 2px solid black;
+    display: inline-block;
+    background-color: white;
+}
+
+div.tabs-container button:hover {
+    background-color: silver;
+}
+
+div.tabs-container button.active {
+    background-color: silver;
+}
+
+.calendar {
+    background: rgba(0,0,0,0);
+    border: 1px solid rgba(0,0,0,0);
+    border-bottom: 1px solid black;
+    width: 70px;
+}
+
+.calendar-container {
+    text-align: center;
+}
+
+.timepicker {
+    background: rgba(0,0,0,0);
+    border: 1px solid rgba(0,0,0,0);
+    border-bottom: 1px solid black;
+    width: 38px;
+}
+
+.calendar-control {
+    outline: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 20%;
+    border: 2px solid black;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 0;
+    background-color: silver;
+}
+
+.calendar-control:hover {
+    background-color: grey;
+}
+
+.filter-radiobuttons {
+    font-size: 15px;
+}
+
+.calendar-control:active {
+    transform: translateY(1px);
+}
+
+.disabled {
+    cursor: not-allowed;
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .3s
+}
+
+.fade-enter, .fade-leave-to {
+    opacity: 0
+}
+
+.shadow {
+    color: white;
+    text-shadow: black 1px 1px 0, black -1px -1px 0, 
+    black -1px 1px 0, black 1px -1px 0;
+}
