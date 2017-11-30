@@ -306,7 +306,8 @@ var app = new Vue({
             params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;
             params[params.version === '1.3.0' ? 'j' : 'y'] = point.y;
             
-            return 'http://192.168.255.201:8080/geoserver/GSS/wms' + L.Util.getParamString(params, 'http://192.168.255.201:8080/geoserver/GSS/wms', true);
+            //return 'http://192.168.255.201:8080/geoserver/GSS/wms' + L.Util.getParamString(params, 'http://192.168.255.201:8080/geoserver/GSS/wms', true);
+            return this.url + L.Util.getParamString(params, this.url, true);
         },
         showGetFeatureInfo: function (latlng, content) {
             if (content.search('<ul>') == -1) {
@@ -397,7 +398,7 @@ var app = new Vue({
                 })                
             }
         };
-        this.updateFilter();
+        //this.updateFilter();
     },
     mounted: function() {
         const layers = [
