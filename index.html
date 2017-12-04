@@ -20,7 +20,8 @@
         <script src="mousePosition.js"></script>
         <script src="leaflet-ruler.js"></script>
         <script src="leaflet.groupedlayercontrol.min.js"></script>
-        <script src="https://unpkg.com/vue@2.5.2/dist/vue.js"></script>
+        <!-- <script src="https://unpkg.com/vue"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.9/vue.min.js"></script>
      </head>
     <body>
         <div id="app">
@@ -33,4 +34,119 @@
         </div>       
     </body>
 </html>
+<script type="text/x-template" id="filter-panel-component">
+    <div class="filter-panel leaflet-bar" id="filterPanel">
+        <div class="tabs-container">
+            <button @click="showDate = true" class="tab-button clickable" :class="{ 'active': showDate }">Время</button>
+            <button @click="showDate = false" class="tab-button clickable" :class="{ 'active': !showDate }">Фильтры</button>
+            <i @click="closePanel" class="fa fa-times fa-2x close-button clickable" aria-hidden="true"></i>
+        </div>
+        <div v-show="showDate">
+            <div v-show="datePanel=='date'">
+                <div class="calendar-container">
+                    <input @change="updateDate" class="calendar">
+                    <i @click="openCalendar" class="fa fa-calendar fa-2x clickable" aria-hidden="true" data-calendar="0"></i>
+                    <button 
+                        @click="changeDay" 
+                        :disabled="isDisabled" 
+                        class="calendar-control clickable"
+                        :class="{ 'disabled': isDisabled }">+</button>
+                    <button 
+                        @click="changeDay" 
+                        class="calendar-control clickable">-</button>
+                    <input @change="updateDate" class="timepicker" value="00:00">
+                    <input class="timepicker" value="23:59">
+                </div>
+            </div>
+            <div v-show="datePanel=='dates'">
+                <div class="calendar-container">
+                    <label>от</label>
+                    <input @change="updateDates" class="calendar">
+                    <i @click="openCalendar" 
+                        class="fa fa-calendar fa-2x clickable" 
+                        aria-hidden="true" 
+                        data-calendar="1"></i>
+                    <input @change="updateDates" class="timepicker" value="00:00">
+                    <label>до</label>
+                    <input @change="updateDates" class="calendar">
+                    <i @click="openCalendar" 
+                        class="fa fa-calendar fa-2x clickable" 
+                        aria-hidden="true" 
+                        data-calendar="2"></i>
+                    <input @change="updateDates" class="timepicker" value="00:00">
+                </div>
+            </div>
+            <div class="filter-radiobuttons">
+                <div>
+                    <input id="date" type="radio" value="date" v-model="datePanel">
+                    <label for="date">Отобразить данные за дату</label>
+                </div>
+                <div>
+                    <input id="dates" type="radio" value="dates" v-model="datePanel">
+                    <label for="dates">Отобразить данные за период</label>
+                </div>
+            </div>
+        </div>
+        <div v-show="!showDate">
+        <p>Достоверность</p>
+        <template v-for="(item,index) in filtersData.confidences">
+            <div class="checkbox-div">
+            <input 
+                @change="updateFilter" 
+                type="checkbox" 
+                class="checkbox" 
+                :value="index" 
+                :name="item" 
+                :id="'confidence-option-'+index" 
+                v-model="filters.confidence_user" 
+                :disabled="filters.confidence_user.length == min && index == filters.confidence_user[0]">
+            <label :for="'confidence-option-'+index">{{ item }}</label>
+            </div>
+        </template>
+        <p>Источник</p>
+        <template v-for="(item,index) in filtersData.sources">
+            <div class="checkbox-div">
+            <input 
+                @change="updateFilter" 
+                type="checkbox" 
+                class="checkbox" 
+                :value="index" 
+                :id="'source-option-'+index" 
+                v-model="filters.source" 
+                :disabled="filters.source.length == min && index == filters.source[0]">
+            <label :for="'source-option-'+index">{{ item }}</label>
+            </div>
+        </template>
+        <p>Площадь</p>
+        <template v-for="(item,index) in filtersData.areas">
+            <div class="checkbox-div">
+            <input 
+                @change="updateFilter" 
+                type="checkbox" 
+                class="checkbox" 
+                :value="index" 
+                :name="item" 
+                :id="'area-option-'+index" 
+                v-model="filters.area" 
+                :disabled="filters.area.length == min && index == filters.area[0]">
+            <label :for="'area-option-'+index">{{ item }}</label>
+            </div>
+        </template>
+        <p>Спутник</p>
+        <template v-for="(item,index) in filtersData.satellites">
+            <div class="checkbox-div">
+            <input 
+                @change="updateFilter" 
+                type="checkbox" 
+                class="checkbox" 
+                :value="index" 
+                :id="'satellite-option-'+index" 
+                v-model="filters.satellite" 
+                :disabled="filters.satellite.length == min && index == filters.satellite[0]">
+            <label :for="'satellite-option-'+index">{{ item }}</label>
+            </div>
+        </template>
+        </div>
+        </div>
+</script>
 <script src="app.js"></script>

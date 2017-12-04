@@ -1,0 +1,19 @@
+{
+  "name": "geoportal",
+  "version": "1.0.0",
+  "description": "VueJS 2 + Leaflet Geoportal",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thebat93/fires-monitoring-vuejs.git"
+  },
+  "author": "Alekseev Igor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thebat93/fires-monitoring-vuejs/issues"
+  },
+  "homepage": "https://github.com/thebat93/fires-monitoring-vuejs#readme"
+}

@@ -1,121 +1,5 @@
 Vue.component('filter-panel', {
-    template: `<div class="filter-panel leaflet-bar" id="filterPanel">
-    <div class="tabs-container">
-        <button @click="showDate = true" class="tab-button clickable" :class="{ 'active': showDate }">Время</button>
-        <button @click="showDate = false" class="tab-button clickable" :class="{ 'active': !showDate }">Фильтры</button>
-        <i @click="closePanel" class="fa fa-times fa-2x close-button clickable" aria-hidden="true"></i>
-    </div>
-    <div v-show="showDate">
-        <div v-show="datePanel=='date'">
-            <div class="calendar-container">
-                <input @change="updateDate" class="calendar">
-                <i @click="openCalendar" class="fa fa-calendar fa-2x clickable" aria-hidden="true" data-calendar="0"></i>
-                <button 
-                    @click="changeDay" 
-                    :disabled="isDisabled" 
-                    class="calendar-control clickable"
-                    :class="{ 'disabled': isDisabled }"
-                >+</button>
-                <button 
-                    @click="changeDay" 
-                    class="calendar-control clickable"
-                >-</button>
-                <input @change="updateDate" class="timepicker" value="00:00">
-                <input class="timepicker" value="23:59">
-            </div>
-        </div>
-        <div v-show="datePanel=='dates'">
-            <div class="calendar-container">
-                <input class="calendar">
-                <i @click="openCalendar" 
-                    class="fa fa-calendar fa-2x clickable" 
-                    aria-hidden="true" 
-                    data-calendar="1"
-                ></i>
-                <input class="calendar">
-                <i @click="openCalendar" 
-                    class="fa fa-calendar fa-2x clickable" 
-                    aria-hidden="true" 
-                    data-calendar="2"
-                ></i>
-            </div>
-        </div>
-        <div class="filter-radiobuttons">
-            <div>
-                <input id="date" type="radio" value="date" v-model="datePanel">
-                <label for="date">Отобразить данные за дату</label>
-            </div>
-            <div>
-                <input id="dates" type="radio" value="dates" v-model="datePanel">
-                <label for="dates">Отобразить данные за период</label>
-            </div>
-        </div>
-    </div>
-    <div v-show="!showDate">
-    <p>Достоверность</p>
-    <template v-for="(item,index) in filtersData.confidences">
-        <div class="checkbox-div">
-        <input 
-            @change="updateFilter" 
-            type="checkbox" 
-            class="checkbox" 
-            :value="index" 
-            :name="item" 
-            :id="'confidence-option-'+index" 
-            v-model="filters.confidence_user" 
-            :disabled="filters.confidence_user.length == min && index == filters.confidence_user[0]"
-        >
-        <label :for="'confidence-option-'+index">{{ item }}</label>
-        </div>
-    </template>
-    <p>Источник</p>
-    <template v-for="(item,index) in filtersData.sources">
-        <div class="checkbox-div">
-        <input 
-            @change="updateFilter" 
-            type="checkbox" 
-            class="checkbox" 
-            :value="index" 
-            :id="'source-option-'+index" 
-            v-model="filters.source" 
-            :disabled="filters.source.length == min && index == filters.source[0]"
-        >
-        <label :for="'source-option-'+index">{{ item }}</label>
-        </div>
-    </template>
-    <p>Площадь</p>
-    <template v-for="(item,index) in filtersData.areas">
-        <div class="checkbox-div">
-        <input 
-            @change="updateFilter" 
-            type="checkbox" 
-            class="checkbox" 
-            :value="index" 
-            :name="item" 
-            :id="'area-option-'+index" 
-            v-model="filters.area" 
-            :disabled="filters.area.length == min && index == filters.area[0]"
-        >
-        <label :for="'area-option-'+index">{{ item }}</label>
-        </div>
-    </template>
-    <p>Спутник</p>
-    <template v-for="(item,index) in filtersData.satellites">
-        <div class="checkbox-div">
-        <input 
-            @change="updateFilter" 
-            type="checkbox" 
-            class="checkbox" 
-            :value="index" 
-            :id="'satellite-option-'+index" 
-            v-model="filters.satellite" 
-            :disabled="filters.satellite.length == min && index == filters.satellite[0]"
-        >
-        <label :for="'satellite-option-'+index">{{ item }}</label>
-        </div>
-    </template>
-    </div>
-    </div>`,
+    template: '#filter-panel-component',
     props: {
         defaultFilters: {
             type: Object,
@@ -153,7 +37,6 @@ Vue.component('filter-panel', {
     },
     methods: {
         openCalendar: function(e) {
-            console.log(this.calendars[e.target.dataset.calendar]);
             this.calendars[e.target.dataset.calendar].toggle();
         },
         changeDay: function(e) {
@@ -171,10 +54,13 @@ Vue.component('filter-panel', {
         updateDate: function(e) {
             this.filters.date = [`${this.calendars[0].formatDate(this.calendars[0].selectedDates[0], "Y-m-d")}T${this.timePickers[0].formatDate(this.timePickers[0].selectedDates[0], "H:i:S")}.000Z`, `${this.calendars[0].formatDate(this.calendars[0].selectedDates[0], "Y-m-d")}T${this.timePickers[1].formatDate(this.timePickers[1].selectedDates[0], "H:i:S")}.000Z`];
             this.updateFilter();
+        },
+        updateDates: function(e) {
+            this.filters.date = [`${this.calendars[1].formatDate(this.calendars[1].selectedDates[0], "Y-m-d")}T${this.timePickers[2].formatDate(this.timePickers[2].selectedDates[0], "H:i:S")}.000Z`, `${this.calendars[2].formatDate(this.calendars[2].selectedDates[0], "Y-m-d")}T${this.timePickers[3].formatDate(this.timePickers[3].selectedDates[0], "H:i:S")}.000Z`];
+            this.updateFilter();
         }
     },
     mounted: function() {    
-        console.log(this.filters.date);
         L.DomEvent.disableClickPropagation(L.DomUtil.get('filterPanel'));
         L.DomEvent.disableScrollPropagation(L.DomUtil.get('filterPanel'));
 
@@ -306,7 +192,6 @@ var app = new Vue({
             params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;
             params[params.version === '1.3.0' ? 'j' : 'y'] = point.y;
             
-            //return 'http://192.168.255.201:8080/geoserver/GSS/wms' + L.Util.getParamString(params, 'http://192.168.255.201:8080/geoserver/GSS/wms', true);
             return this.url + L.Util.getParamString(params, this.url, true);
         },
         showGetFeatureInfo: function (latlng, content) {
@@ -379,26 +264,23 @@ var app = new Vue({
                     layers: 'GSS:firepoint_poly',
                     transparent: true,
                     format: 'image/png',
-                    queryable: false,
-                    cql_filter: 'date BETWEEN 2017-11-01T00:00:00Z AND 2017-11-02T00:00:00Z'
+                    queryable: false
                 }),
                 'Зоны пожаров (мел. масштаб)': L.tileLayer.wms(url, {
                     layers: 'GSS:firepoint_poly_mini',
                     transparent: true,
                     format: 'image/png',
-                    queryable: true,
-                    cql_filter: 'date BETWEEN 2017-11-01T00:00:00Z AND 2017-11-02T00:00:00Z'
+                    queryable: true
                 }),
                 'Угрозы': L.tileLayer.wms(url, {
                     layers: 'GSS:threats_sql',
                     transparent: true,
                     format: 'image/png',
-                    queryable: true,
-                    cql_filter: 'date BETWEEN 2017-11-01T00:00:00Z AND 2017-11-02T00:00:00Z'
+                    queryable: true
                 })                
             }
         };
-        //this.updateFilter();
+        this.updateFilter(this.userFilters);
     },
     mounted: function() {
         const layers = [
