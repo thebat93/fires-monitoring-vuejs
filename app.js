@@ -104,6 +104,7 @@ var app = new Vue({
             source: [0, 1],
         },
         filterString: '',
+        threatsFilterString: '',
         filtersData: {
             confidences: ['Низкая', 'Средняя', 'Высокая'],
             satellites: ['SuomiNPP', 'Aqua', 'Terra'],
@@ -119,6 +120,7 @@ var app = new Vue({
                 switch(prop) {
                     case 'date':
                         filterArray.push(`(date BETWEEN ${this.userFilters[prop][0]} AND ${this.userFilters[prop][1]})`);
+                        this.threatsFilterString = `(date BETWEEN ${this.userFilters[prop][0]} AND ${this.userFilters[prop][1]})`;
                         break;
                     case 'area':
                         const sortArray = this.userFilters[prop].sort((a, b) => a - b);
@@ -147,7 +149,7 @@ var app = new Vue({
             this.filterString = filterArray.join(' AND ');
             this.groupedOverlays['Пожары']['Зоны пожаров (круп. масштаб)'].setParams({cql_filter: this.filterString});
             this.groupedOverlays['Пожары']['Зоны пожаров (мел. масштаб)'].setParams({cql_filter: this.filterString});
-            this.groupedOverlays['Пожары']['Угрозы'].setParams({cql_filter: this.filterString});
+            this.groupedOverlays['Пожары']['Угрозы'].setParams({cql_filter: this.threatsFilterString});
         },
         getFeatureInfo: function (evt) {
             const url = this.getFeatureInfoUrl(evt.latlng),
@@ -165,11 +167,20 @@ var app = new Vue({
         },
         getFeatureInfoUrl: function (latlng) {
             let arr = '';
+            let filters = '';
             this.map.eachLayer(layer => { 
                 if (layer instanceof L.TileLayer.WMS && layer.options.queryable === true) {
-                    arr += layer.wmsParams.layers + ','; 
+                    arr += layer.wmsParams.layers + ',';
+                    if (layer.wmsParams.layers === 'GSS:firepoint_poly_mini') {
+                        filters += this.filterString + ';';
+                    } else if (layer.wmsParams.layers === 'GSS:threats_sql') {
+                        filters += this.threatsFilterString + ';';
+                    } else {
+                        filters += 'INCLUDE;';
+                    }
                 }
             });
+            filters = filters.slice(0, -1);
             arr = arr.slice(0, -1);
             const point = this.map.latLngToContainerPoint(latlng, this.map.getZoom()),
                 size = this.map.getSize(),
@@ -187,7 +198,7 @@ var app = new Vue({
                     query_layers: arr,
                     info_format: 'text/html',
                     feature_count: 10,
-                    vendorParams: {'CQL_FILTER': "INCLUDE;INCLUDE;INCLUDE;INCLUDE;INCLUDE;INCLUDE"}
+                    cql_filter: filters
                 };
             
             params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;
