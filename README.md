@@ -1,3 +1,5 @@
-VueJS 2 project
+Fires monitoring system (VueJS 2 project)
 
-Fires monitoring system
+Built using Leaflet 1.2.0
+
+Для корректной работы требуется разрешить CORS-запросы или запускать с локального сервера (например, live-server) и разрешить в браузере загрузку из небезопасных источников (закончился сертификат на сервере).
