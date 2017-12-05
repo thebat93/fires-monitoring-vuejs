@@ -1,12 +1,12 @@
 body {
     padding: 0;
     margin: 0;
+    font-family: 'Helvetica Neue';
 }
 
 html, body, #map {
     height: 100%;
     width: 100%;
-    font-family: 'Helvetica Neue';
 }
 
 .leaflet-control-layers {
@@ -81,10 +81,11 @@ div.tabs-container button.active {
 }
 
 .calendar {
+    font-size: 15px;
     background: rgba(0,0,0,0);
     border: 1px solid rgba(0,0,0,0);
     border-bottom: 1px solid black;
-    width: 70px;
+    width: 80px;
 }
 
 .calendar-container {
@@ -92,10 +93,11 @@ div.tabs-container button.active {
 }
 
 .timepicker {
+    font-size: 15px;
     background: rgba(0,0,0,0);
     border: 1px solid rgba(0,0,0,0);
     border-bottom: 1px solid black;
-    width: 38px;
+    width: 42px;
 }
 
 .calendar-control {
@@ -138,4 +140,84 @@ div.tabs-container button.active {
     color: white;
     text-shadow: black 1px 1px 0, black -1px -1px 0, 
     black -1px 1px 0, black 1px -1px 0;
+}
+
+.checkbox {
+	height: 0;
+	width: 0;
+	display: none;
+}
+
+.checkbox-div {
+    line-height: 25px;
+}
+
+.checkbox + label {
+	cursor: pointer;
+	text-indent: -9999px;
+	width: 40px;
+	height: 20px;
+	background: grey;
+	display: block;
+	border-radius: 100px;
+    position: relative;
+    display: inline-block;
+}
+
+.checkbox + label:after {
+	content: '';
+	position: absolute;
+	top: 3px;
+	left: 5px;
+	width: 15px;
+	height: 15px;
+	background: #fff;
+	border-radius: 90px;
+	transition: 0.3s;
+}
+.checkbox:checked + label {
+	background: #BADA55;
+}
+
+.checkbox:checked + label:after {
+	left: calc(100% - 5px);
+	transform: translateX(-100%);
+}
+
+.checkbox + label:active:after {
+	width: 15px;
+}
+
+.toggle {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.row {
+    width: 100%;
+    margin: 0 auto; 
+}
+
+.row:not(:last-child) {
+    margin-bottom: 10px; 
+}
+
+.row::after {
+      content: "";
+      display: table;
+      clear: both;
+}
+
+.row .col-1-of-2:not(:last-child) {
+    margin-right: 20px;
+}
+
+.row .col-1-of-2 {
+    float: left; 
+    width: calc((100% - 20px) / 2);
+}
+
+.content {
+    padding: 10px;
+    font-size: 15px;
 }

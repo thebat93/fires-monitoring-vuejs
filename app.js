@@ -186,7 +186,8 @@ var app = new Vue({
                     layers: arr,
                     query_layers: arr,
                     info_format: 'text/html',
-                    feature_count: 10
+                    feature_count: 10,
+                    vendorParams: {'CQL_FILTER': "INCLUDE;INCLUDE;INCLUDE;INCLUDE;INCLUDE;INCLUDE"}
                 };
             
             params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;

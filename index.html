@@ -1,38 +1,41 @@
 <html>
-    <head>
-        <title>КМПО</title>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8" /> 
-        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-        <link href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
-        integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
-        crossorigin=""/>
-        <link rel="stylesheet" href="leaflet-ruler.css"/>
-        <link rel="stylesheet" href="leaflet.groupedlayercontrol.min.css"/>
-        <link rel="stylesheet" href="style.css"/>
-        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-        <script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
-        <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
-   integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
-   crossorigin=""></script>
-        <script src="bingLayer.js"></script>
-        <script src="mousePosition.js"></script>
-        <script src="leaflet-ruler.js"></script>
-        <script src="leaflet.groupedlayercontrol.min.js"></script>
-        <!-- <script src="https://unpkg.com/vue"></script> -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.9/vue.min.js"></script>
-     </head>
-    <body>
-        <div id="app">
-            <div id="map">
-                <i v-if="!openPanel" class="leaflet-bar fa fa-calendar fa-3x open-button clickable" aria-hidden="true" @click="openPanel = true"></i>
-                <transition name="fade">
-                    <filter-panel v-if="openPanel" :class="{ 'filter-panel__open': openPanel, 'filter-panel__closed': !openPanel }" :filters-data="filtersData" :default-filters="userFilters" v-on:update="updateFilter" v-on:close="openPanel = false"></filter-panel>
-                </transition>
-            </div>
-        </div>       
-    </body>
+
+<head>
+    <title>КМПО</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+        crossorigin="" />
+    <link rel="stylesheet" href="leaflet-ruler.css" />
+    <link rel="stylesheet" href="leaflet.groupedlayercontrol.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+        crossorigin=""></script>
+    <script src="bingLayer.js"></script>
+    <script src="mousePosition.js"></script>
+    <script src="leaflet-ruler.js"></script>
+    <script src="leaflet.groupedlayercontrol.min.js"></script>
+    <!-- <script src="https://unpkg.com/vue"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.9/vue.min.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div id="map">
+            <i v-if="!openPanel" class="leaflet-bar fa fa-calendar fa-3x open-button clickable" aria-hidden="true" @click="openPanel = true"></i>
+            <transition name="fade">
+                <filter-panel v-if="openPanel" :class="{ 'filter-panel__open': openPanel, 'filter-panel__closed': !openPanel }" :filters-data="filtersData"
+                    :default-filters="userFilters" v-on:update="updateFilter" v-on:close="openPanel = false"></filter-panel>
+            </transition>
+        </div>
+    </div>
+</body>
+
 </html>
 <script type="text/x-template" id="filter-panel-component">
     <div class="filter-panel leaflet-bar" id="filterPanel">
@@ -88,64 +91,90 @@
             </div>
         </div>
         <div v-show="!showDate">
+        <div class="content">
+        <div class="row">
+        <div class="filter-section col-1-of-2">
         <p>Достоверность</p>
         <template v-for="(item,index) in filtersData.confidences">
             <div class="checkbox-div">
-            <input 
-                @change="updateFilter" 
-                type="checkbox" 
-                class="checkbox" 
-                :value="index" 
-                :name="item" 
-                :id="'confidence-option-'+index" 
-                v-model="filters.confidence_user" 
-                :disabled="filters.confidence_user.length == min && index == filters.confidence_user[0]">
-            <label :for="'confidence-option-'+index">{{ item }}</label>
+                <div class="toggle">
+                    <input 
+                        @change="updateFilter" 
+                        type="checkbox" 
+                        class="checkbox" 
+                        :value="index" 
+                        :name="item" 
+                        :id="'confidence-option-'+index" 
+                        v-model="filters.confidence_user" 
+                        :disabled="filters.confidence_user.length == min && index == filters.confidence_user[0]">
+                    <label :for="'confidence-option-'+index"></label>
+                </div>
+                <div class="toggle">{{ item }}</div>
             </div>
         </template>
+        </div>
+        <div class="filter-section col-1-of-2">
         <p>Источник</p>
         <template v-for="(item,index) in filtersData.sources">
             <div class="checkbox-div">
-            <input 
-                @change="updateFilter" 
-                type="checkbox" 
-                class="checkbox" 
-                :value="index" 
-                :id="'source-option-'+index" 
-                v-model="filters.source" 
-                :disabled="filters.source.length == min && index == filters.source[0]">
-            <label :for="'source-option-'+index">{{ item }}</label>
+                <div class="toggle">
+                    <input 
+                        @change="updateFilter" 
+                        type="checkbox" 
+                        class="checkbox" 
+                        :value="index" 
+                        :id="'source-option-'+index" 
+                        v-model="filters.source" 
+                        :disabled="filters.source.length == min && index == filters.source[0]">
+                    <label :for="'source-option-'+index"></label>
+                </div>
+                <div class="toggle">{{ item }}</div>
             </div>
         </template>
+        </div>
+        </div>
+        <div class="row">
+        <div class="filter-section col-1-of-2">
         <p>Площадь</p>
         <template v-for="(item,index) in filtersData.areas">
             <div class="checkbox-div">
-            <input 
-                @change="updateFilter" 
-                type="checkbox" 
-                class="checkbox" 
-                :value="index" 
-                :name="item" 
-                :id="'area-option-'+index" 
-                v-model="filters.area" 
-                :disabled="filters.area.length == min && index == filters.area[0]">
-            <label :for="'area-option-'+index">{{ item }}</label>
+                <div class="toggle">
+                    <input 
+                        @change="updateFilter" 
+                        type="checkbox" 
+                        class="checkbox" 
+                        :value="index" 
+                        :name="item" 
+                        :id="'area-option-'+index" 
+                        v-model="filters.area" 
+                        :disabled="filters.area.length == min && index == filters.area[0]">
+                    <label :for="'area-option-'+index"></label>
+                </div>
+                <div class="toggle">{{ item }}</div>
             </div>
         </template>
+        </div>
+        <div class="filter-section col-1-of-2">
         <p>Спутник</p>
         <template v-for="(item,index) in filtersData.satellites">
             <div class="checkbox-div">
-            <input 
-                @change="updateFilter" 
-                type="checkbox" 
-                class="checkbox" 
-                :value="index" 
-                :id="'satellite-option-'+index" 
-                v-model="filters.satellite" 
-                :disabled="filters.satellite.length == min && index == filters.satellite[0]">
-            <label :for="'satellite-option-'+index">{{ item }}</label>
+                <div class="toggle">
+                    <input 
+                        @change="updateFilter" 
+                        type="checkbox" 
+                        class="checkbox" 
+                        :value="index" 
+                        :id="'satellite-option-'+index" 
+                        v-model="filters.satellite" 
+                        :disabled="filters.satellite.length == min && index == filters.satellite[0]">
+                    <label :for="'satellite-option-'+index"></label>
+                </div>
+                <div class="toggle">{{ item }}</div>
             </div>
         </template>
+        </div>
+        </div>
+        </div>
         </div>
         </div>
 </script>
