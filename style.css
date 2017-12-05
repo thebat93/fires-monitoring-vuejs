@@ -42,12 +42,16 @@ html, body, #map {
 
 .open-button {
     position: absolute;
-    color: black;
+    color: grey;
     background-color: white;
     z-index: 1000;
     padding: 2px;
     margin-left: 80px;
     margin-top: 12px;
+}
+
+.open-button:hover {
+    color: black;
 }
 
 .close-button {
