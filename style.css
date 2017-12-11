@@ -94,6 +94,7 @@ div.tabs-container button.active {
 
 .calendar-container {
     text-align: center;
+    font-size: 15px;
 }
 
 .timepicker {

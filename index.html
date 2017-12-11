@@ -4,22 +4,24 @@
     <title>КМПО</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <link href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" rel="stylesheet">
+    <!-- <link href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/flatpickr.min.css">
     <link rel="stylesheet" href="assets/css/leaflet.css">
     <link rel="stylesheet" href="assets/css/leaflet-ruler.css">
-    <link rel="stylesheet" href="assets/css/leaflet.groupedlayercontrol.min.css">
+    <link rel="stylesheet" href="assets/css/leaflet.groupedlayercontrol.min.css"> -->
+    <link rel="stylesheet" href="assets/css/libs.min.css">
     <link rel="stylesheet" href="style.css">
-    <script src="assets/js/flatpickr.js"></script>
+    <script src="assets/js/libs.min.js"></script>
+    <!-- <script src="assets/js/flatpickr.js"></script>
     <script src="assets/js/ru.js"></script>
     <script src="assets/js/leaflet.js"></script>
     <script src="assets/js/bingLayer.js"></script>
     <script src="assets/js/mousePosition.js"></script>
     <script src="assets/js/leaflet-ruler.js"></script>
     <script src="assets/js/leaflet.groupedlayercontrol.min.js"></script>
-    <!-- <script src="https://unpkg.com/vue"></script> -->
-    <script src="assets/js/vue.min.js"></script>
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="assets/js/vue.min.js"></script> -->
+    <!-- <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script> -->
 </head>
 
 <body>
@@ -51,10 +53,11 @@
                         @click="changeDay" 
                         :disabled="isDisabled" 
                         class="calendar-control clickable"
-                        :class="{ 'disabled': isDisabled }">+</button>
+                        :class="{ 'disabled': isDisabled }"><i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
                     <button 
                         @click="changeDay" 
-                        class="calendar-control clickable">-</button>
+                        class="calendar-control clickable"><i class="fa fa-minus" aria-hidden="true"></button>
                     <input @change="updateDate" class="timepicker" value="00:00">
                     <input class="timepicker" value="23:59">
                 </div>
@@ -176,4 +179,4 @@
         </div>
         </div>
 </script>
-<script src="app.js"></script>
+<script src="app.min.js"></script>
