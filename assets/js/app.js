@@ -315,6 +315,33 @@ var app = new Vue({
       }
     };
     this.updateFilter(this.userFilters);
+    var labels = document.querySelectorAll('.leaflet-control-layers-group-name');
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = labels[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var label = _step.value;
+
+        if (label.textContent === 'Объекты' || label.textContent === 'Пожары') {
+          label.querySelector('input').checked = true;
+        }
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator.return) {
+          _iterator.return();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
   },
   mounted: function mounted() {
     var layers = [this.baseLayers["Bing"], this.groupedOverlays["Объекты"]["Газопровод"], this.groupedOverlays["Объекты"]["Газодобывающие комплексы"], this.groupedOverlays["Объекты"]["Факельные установки"], this.groupedOverlays["Объекты"]["Эксплуатационные нарушения"], this.groupedOverlays["Объекты"]["Зоны ответственности"], this.groupedOverlays["Пожары"]["Зоны пожаров (круп. масштаб)"], this.groupedOverlays["Пожары"]["Зоны пожаров (мел. масштаб)"], this.groupedOverlays["Пожары"]["Угрозы"]];
@@ -335,6 +362,7 @@ var app = new Vue({
     var layerSwitcher = document.querySelector(".leaflet-control-layers-list");
     L.DomEvent.disableClickPropagation(layerSwitcher);
     L.DomEvent.disableScrollPropagation(layerSwitcher);
+
     this.map.on("click", this.getFeatureInfo);
   }
 });

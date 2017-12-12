@@ -409,6 +409,38 @@ var app = new Vue({
     );
     L.DomEvent.disableClickPropagation(layerSwitcher);
     L.DomEvent.disableScrollPropagation(layerSwitcher);
+    const labels = document.querySelectorAll('.leaflet-control-layers-group-label');
+    for (let label of labels) {
+      if (label.textContent === 'Объекты' || label.textContent === 'Пожары') {
+        label.querySelector('input').checked = true;
+      }
+    }
+
+    const weatherControl = L.Control.extend({
+      
+       options: {
+         position: 'topleft' 
+       },
+      
+       onAdd: function (map) {
+        const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+          
+           container.style.backgroundColor = 'white';
+           container.style.backgroundImage = "url(assets/weather.png)";
+           container.style.backgroundPosition = "center center";
+           container.style.backgroundRepeat = "no-repeat";
+           container.style.backgroundSize = "32px 32px";
+           container.style.width = '35px';
+           container.style.height = '35px';
+        
+           container.onclick = function(){
+            window.open('forecast.html?lat='+map.getCenter().lat+'&lon='+map.getCenter().lng+'&zoom='+map.getZoom());
+           }
+           return container;
+       },
+      
+     });
+    this.map.addControl(new weatherControl());
     this.map.on("click", this.getFeatureInfo);
   }
 });

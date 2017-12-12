@@ -41,7 +41,10 @@ gulp.task('babel', function() {
     .pipe(babel({
         presets: ['env']
     }))
-    .pipe(gulp.dest('assets/js'))
+    .pipe(uglify())
+    .pipe(rename({suffix: '.min'}))
+    .pipe(gulp.dest(''));
+    //.pipe(gulp.dest('assets/js'))
 });
 
 gulp.task('minify', function() {
